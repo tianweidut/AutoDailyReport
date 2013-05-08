@@ -24,4 +24,5 @@ host = "http://192.168.2.36:3279"
 proxy_host = "127.0.0.1:8087"
 
 #Selenium RC Server
-rc_server = "192.168.2.7:4444/wd/hub"
+rc_server_ip = "192.168.2.7"
+rc_server_port = 4444

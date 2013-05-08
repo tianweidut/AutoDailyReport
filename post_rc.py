@@ -22,7 +22,9 @@ class DailyPost(object):
         self.login_url = "/Account/Login.aspx"
         self.report_url = "/ReportDetail.aspx?ID=3b363280-091e-4a79-b272-d5a0b981269a"
 
-        self.selenium = selenium("192.168.2.90", 4444, "*firefox",
+        self.selenium = selenium(config.rc_server_ip, 
+                                 config.rc_server_port,
+                                 "*firefox",
                                  self.base_url)
         self.selenium.start()
 
