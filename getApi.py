@@ -18,9 +18,17 @@ import simplejson
 class GetRepoCommits(object):
     def __init__(self):
         self.username = config.github_username
+        self.headers = self.make_headers()
         self.url = config.github
         self.repos = self.get_repos(config.repos)
         self.proxy_settings()
+
+    def make_headers(self):
+        """
+        make python like a read webbrowser
+        """
+        return {'User-Agent': 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US;\
+                rv:1.9.1.6) Gecko/20091201 Firefox/3.5.6'}
 
     def get_repos(self, repo):
         result = []
@@ -92,7 +100,7 @@ class GetRepoCommits(object):
             repo_url = "/".join([self.url, "repos", repo, "commits"])
             repo_url = repo_url + args
 
-            request = urllib2.Request(repo_url)
+            request = urllib2.Request(repo_url, headers=self.headers)
             response = urllib2.urlopen(request)
             raw_data = response.read()
             commits_info = self.process_factory(simplejson.loads(raw_data))
@@ -112,7 +120,8 @@ class GetRepoCommits(object):
             Github API Json string
         """
         repos_list_url = "/".join([self.url, "repos", repo, "branches"])
-        request = urllib2.Request(repos_list_url)
+        print repos_list_url
+        request = urllib2.Request(repos_list_url, headers=self.headers)
         response = urllib2.urlopen(request)
 
         return response.read()
